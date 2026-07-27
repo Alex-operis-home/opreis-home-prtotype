@@ -339,10 +339,11 @@
         <div class="progress-card-head"><h3>Progression globale</h3><span id="db-progress-label">0 %</span></div>
         <div class="progress-track"><div class="progress-fill" id="db-progress-fill"></div></div>
       </div>
-      <div class="stat-grid">
+      <div class="stat-grid" style="grid-template-columns:repeat(5,1fr);">
         <div class="stat-card"><div class="stat-label">Étape actuelle</div><div class="stat-value" id="db-stage">Terrain</div></div>
         <div class="stat-card"><div class="stat-label">Budget prévu</div><div class="stat-value">280 000 €</div></div>
         <div class="stat-card"><div class="stat-label">Budget engagé</div><div class="stat-value">46 000 €</div></div>
+        <div class="stat-card"><div class="stat-label">Documents manquants</div><div class="stat-value" id="db-docs-missing" style="color:var(--orange);">0</div></div>
         <div class="stat-card"><div class="stat-label">Risque financier estimé</div><div class="stat-value" id="db-financial-risk" style="font-size:16px;">—</div></div>
       </div>
       <div class="btn-row">
@@ -460,60 +461,60 @@ const stages = [
     ["Avez-vous vérifié le PLU avant de vous engager (constructibilité, hauteur, emprise au sol) ?","important","Un terrain peut sembler constructible sans l'être aux conditions souhaitées.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."],
     ["Une clause suspensive d'obtention de permis figure-t-elle dans le compromis ?","important","Sans cette clause, vous restez engagé même si le permis est refusé.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."],
     ["Avez-vous vérifié les servitudes (passage, réseaux, mitoyenneté) ?","vigilance","Une servitude non identifiée peut limiter l'implantation de la maison.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."]
-  ]},
+  ], docs:[{name:"Étude de sol G1/G2",status:"manquant"},{name:"Compromis de vente",status:"manquant"},{name:"Certificat d'urbanisme",status:"manquant"}]},
   { title:"Géomètre", rules:[
     ["Un bornage contradictoire a-t-il été réalisé avec les voisins ?","vigilance","Un litige de limite de propriété peut bloquer le chantier plus tard.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."],
     ["Le relevé topographique intègre-t-il les pentes et niveaux du terrain ?","vigilance","Une pente mal anticipée augmente le coût des fondations et terrassements.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."],
     ["Le document d'arpentage a-t-il été déposé si le terrain est issu d'une division ?","important","Sans ce document, la vente ou le permis peuvent être bloqués.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."],
     ["Les réseaux existants ont-ils été localisés précisément ?","vigilance","Un réseau mal localisé peut obliger à revoir l'implantation.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."]
-  ]},
+  ], docs:[{name:"Bornage contradictoire",status:"manquant"},{name:"Relevé topographique",status:"manquant"},{name:"Document d'arpentage",status:"manquant"}]},
   { title:"Urbanisme", rules:[
     ["Avez-vous demandé un certificat d'urbanisme opérationnel ?","vigilance","Ce document confirme la faisabilité réelle avant d'engager les frais de conception.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."],
     ["Le projet respecte-t-il les règles de recul, hauteur et aspect extérieur du PLU ?","important","Un non-respect entraîne un refus de permis ou des modifications coûteuses.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."],
     ["Le terrain est-il concerné par un risque (PPRI, PPRN, zone sismique) ?","important","Ces risques imposent des normes de construction spécifiques et coûteuses.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."],
     ["Avez-vous consulté le service urbanisme de la mairie avant dépôt ?","vigilance","Un pré-échange évite souvent un refus ou des allers-retours.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."],
     ["Une taxe d'aménagement a-t-elle été estimée en amont ?","vigilance","Cette taxe, parfois oubliée, peut représenter plusieurs milliers d'euros.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."]
-  ]},
+  ], docs:[{name:"Certificat d'urbanisme opérationnel",status:"manquant"},{name:"Extrait du PLU",status:"manquant"},{name:"Attestation taxe d'aménagement",status:"manquant"}]},
   { title:"Conception", rules:[
     ["Le plan a-t-il été validé par un professionnel indépendant du constructeur ?","vigilance","Un regard indépendant évite des choix qui favorisent la marge du constructeur.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."],
     ["Les surfaces annoncées sont-elles en surface habitable et non en surface brute ?","vigilance","Un écart de définition peut gonfler artificiellement la surface perçue.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."],
     ["L'orientation et l'exposition ont-elles été étudiées ?","vigilance","Une mauvaise orientation impacte confort et charges de chauffage sur 30 ans.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."]
-  ]},
+  ], docs:[{name:"Plans validés",status:"manquant"},{name:"Étude de surface habitable",status:"manquant"},{name:"Étude d'orientation",status:"manquant"}]},
   { title:"Constructeur", rules:[
     ["Le constructeur dispose-t-il d'une garantie de livraison à prix et délais convenus ?","important","Sans cette garantie, vous n'êtes pas protégé en cas de défaillance de l'entreprise.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."],
     ["Avez-vous visité des chantiers récemment livrés par ce constructeur ?","vigilance","Un chantier visité révèle souvent plus qu'une plaquette commerciale.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."],
     ["Le contrat proposé est-il un CCMI ?","important","Hors CCMI, vous perdez des protections légales essentielles.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."],
     ["Avez-vous vérifié l'absence de procédures en cours contre ce constructeur ?","vigilance","Un historique de litiges est un signal d'alerte fort.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."]
-  ]},
+  ], docs:[{name:"Contrat CCMI",status:"manquant"},{name:"Garantie de livraison",status:"manquant"},{name:"Références chantiers",status:"manquant"}]},
   { title:"Devis", rules:[
     ["Avez-vous comparé au moins deux devis avant signature ?","vigilance","Opéris recommande systématiquement de comparer prix et prestations avant tout engagement.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."],
     ["Le devis détaille-t-il précisément les prestations incluses et exclues ?","important","Un devis vague permet des suppléments non anticipés en cours de chantier.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."],
     ["Une réserve pour imprévus (5 à 10 %) est-elle prévue dans votre budget global ?","vigilance","L'absence de marge de sécurité est une cause fréquente de tension budgétaire.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."]
-  ]},
+  ], docs:[{name:"Devis comparatifs (x2 min)",status:"manquant"},{name:"Notice descriptive",status:"manquant"},{name:"Échéancier de paiement",status:"manquant"}]},
   { title:"Assurances", rules:[
     ["L'attestation de garantie décennale a-t-elle été obtenue avant le démarrage des travaux ?","important","Opéris recommande de ne jamais démarrer un chantier sans cette attestation en main.","Lors de plusieurs opérations, un manque de vérification des assurances a entraîné des difficultés importantes."],
     ["Avez-vous souscrit une assurance dommages-ouvrage ?","important","Sans elle, un sinistre après livraison peut engager des années de procédure avant indemnisation.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."],
     ["Les dates de validité de chaque attestation ont-elles été vérifiées ?","important","Une attestation expirée équivaut juridiquement à une absence d'assurance.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."]
-  ]},
+  ], docs:[{name:"Attestation décennale",status:"manquant"},{name:"Assurance dommages-ouvrage",status:"manquant"},{name:"Responsabilité civile pro",status:"manquant"}]},
   { title:"Permis", rules:[
     ["Le permis a-t-il été affiché sur le terrain de façon visible et conforme ?","important","Sans affichage conforme, le délai de recours des tiers ne court pas.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."],
     ["Le délai de recours des tiers (2 mois) est-il purgé avant démarrage ?","vigilance","Démarrer avant la purge expose à un risque d'arrêt de chantier.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."],
     ["Le permis obtenu correspond-il exactement aux plans transmis au constructeur ?","important","Un écart expose à une infraction et un refus de conformité.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."]
-  ]},
+  ], docs:[{name:"Permis de construire",status:"manquant"},{name:"Affichage réglementaire",status:"manquant"},{name:"Déclaration d'ouverture de chantier",status:"manquant"}]},
   { title:"Chantier", rules:[
     ["Un compte-rendu de visite est-il établi à chaque étape clé ?","vigilance","Sans traçabilité, un désaccord ultérieur est plus difficile à trancher.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."],
     ["Les appels de fonds correspondent-ils à l'avancement réel constaté ?","important","Payer plus vite que l'avancement réel prive de tout levier de négociation.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."],
     ["Les malfaçons visibles sont-elles signalées par écrit dès leur constatation ?","vigilance","Un signalement tardif complique la mise en cause du responsable.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."]
-  ]},
+  ], docs:[{name:"Comptes-rendus de visite",status:"manquant"},{name:"Justificatifs d'appels de fonds",status:"manquant"},{name:"Signalements de malfaçons",status:"manquant"}]},
   { title:"Appels de fonds", rules:[
     ["L'échéancier respecte-t-il les plafonds légaux du CCMI par étape ?","important","Dépasser les plafonds légaux prive l'acquéreur de protection en cas de défaillance.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."],
     ["Le solde final (5 %) est-il conservé jusqu'à la levée complète des réserves ?","important","Payer le solde avant la levée des réserves supprime tout moyen de pression.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."]
-  ]},
+  ], docs:[{name:"Échéancier CCMI",status:"manquant"},{name:"Justificatifs d'avancement",status:"manquant"}]},
   { title:"Réception", rules:[
     ["La réception se fait-elle en présence d'un professionnel indépendant ?","vigilance","Un œil non averti laisse souvent passer des réserves importantes.","Exemple à affiner : sur une de mes opérations, ce point précis a été négligé et a coûté du temps et de l'argent — je remplacerai cette ligne par le cas réel issu de mon carnet fondateur."],
     ["Toutes les réserves sont-elles consignées dans le procès-verbal ?","important","Une réserve non écrite au PV est juridiquement très difficile à faire valoir.","Exemple à affiner : j'ai déjà vu ce point causer un blocage sur un chantier — anecdote à préciser depuis mon carnet fondateur."],
     ["La garantie de parfait achèvement (1 an) est-elle notée avec une date de rappel ?","vigilance","Point de suivi utile pour ne pas laisser passer le délai de réclamation.","Exemple à affiner : ce type de vérification a fait la différence sur une de mes opérations passées — détail à ajouter depuis mon carnet fondateur."]
-  ]}
+  ], docs:[{name:"Procès-verbal de réception",status:"manquant"},{name:"Levée des réserves",status:"manquant"},{name:"Garantie de parfait achèvement",status:"manquant"}]}
 ];
 
 const folders = ["Terrain","Urbanisme","Plans","Contrats","Assurances","Factures","Chantier","Réception"];
@@ -574,10 +575,24 @@ function renderStageDetail(){
     <div class="stage-detail-head"><h2>${stage.title}</h2><div class="stage-badge">Étape ${currentStage+1} sur ${stages.length}</div></div>
     <div class="mini-progress"><div class="progress-track"><div class="progress-fill" style="width:${(answered/stage.rules.length*100)}%"></div></div><span>${answered} / ${stage.rules.length} vérifiés</span></div>
     <div id="rulesList"></div>
+    <div class="section-title" style="margin:26px 0 14px;"><div class="icon">📁</div><h2 style="font-size:15px;">Documents de l'étape</h2></div>
+    <div id="stageDocs"></div>
     <div class="stage-nav-btns">
       <button class="btn-ghost" ${currentStage===0?'disabled style="opacity:.4"':''} onclick="prevStage()">← Étape précédente</button>
       <button class="btn-primary" ${currentStage===stages.length-1?'disabled style="opacity:.4"':''} onclick="nextStage()">Étape suivante →</button>
     </div>`;
+  const docsList = document.getElementById('stageDocs');
+  (stage.docs || []).forEach((doc, di) => {
+    const row = document.createElement('div');
+    row.className = 'doc-row';
+    row.style.marginBottom = '8px';
+    row.style.cursor = 'pointer';
+    const badge = doc.status === 'conforme' ? '✅ Conforme' : doc.status === 'bloquant' ? '❌ Bloquant' : '⚠️ Manquant';
+    const color = doc.status === 'conforme' ? 'var(--green-light)' : doc.status === 'bloquant' ? 'var(--red)' : 'var(--orange)';
+    row.innerHTML = `<div class="name">📄 ${doc.name}</div><div class="doc-status" style="color:${color};font-weight:600;">${badge}</div>`;
+    row.onclick = () => { cycleDocStatus(currentStage, di); };
+    docsList.appendChild(row);
+  });
   const list = document.getElementById('rulesList');
   stage.rules.forEach((rule, ri) => {
     const [q, level, alert, tip] = rule;
@@ -601,6 +616,13 @@ function renderStageDetail(){
     renderAll();
   });
 }
+function cycleDocStatus(si, di){
+  const order = ['manquant','conforme','bloquant'];
+  const doc = stages[si].docs[di];
+  const idx = order.indexOf(doc.status);
+  doc.status = order[(idx+1) % order.length];
+  renderAll();
+}
 function prevStage(){ if (currentStage > 0){ currentStage--; renderAll(); } }
 function nextStage(){ if (currentStage < stages.length-1){ currentStage++; renderAll(); } }
 
@@ -611,6 +633,8 @@ function renderDashboard(){
   document.getElementById('db-progress-label').textContent = pct + ' %';
   document.getElementById('db-progress-fill').style.width = pct + '%';
   document.getElementById('db-stage').textContent = stages[currentStage].title;
+  const missingDocs = stages.reduce((n,s) => n + (s.docs||[]).filter(d => d.status !== 'conforme').length, 0);
+  document.getElementById('db-docs-missing').textContent = missingDocs;
 }
 function actionButtonsFor(text){
   const t = text.toLowerCase();
